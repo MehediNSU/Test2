@@ -53,7 +53,7 @@ exports.update = (req, res) =>{
     Userdb.findByIdAndUpdate(id,req.body, {userFindAndMOdify : false})
     .then(data =>{
         if(!data){
-            res.status(404).send({message: `Cannot  Update user with ${id}. maybe user not found!`})
+            res.status(404).send({message: `Cannot  Update user with ${id}. Maybe user not found!`})
         } else{
             res.send(data)
         }
@@ -65,5 +65,21 @@ exports.update = (req, res) =>{
 
 //Delete a user with specify user id in the request
 exports.delete = (req, res) =>{
-    
+    const id = req.params.id;
+
+    Userdb.findByIdAndDelete(id)
+    .then(data =>{
+        if(!data){
+            res.status(404).send({message: `Cannot Delete with ${id}, Maybe id is wrong`})
+        }else{
+            res.send({
+                message: "User was deleted succesfully!"
+            })
+        }
+    })
+    .catch(err =>{
+        res.status(500).send({
+            message: "Could not delete User with id=" + id
+        });
+    });
 }
