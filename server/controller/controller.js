@@ -32,7 +32,13 @@ user
 
 //Retrive and return all users/retrive and retuen a single user
 exports.find = (req, res) =>{
-    
+    Userdb.find()
+    .then(user =>{
+        res.send(user)
+    })
+    .catch(err =>{
+        res.status(500).send({message: err.message||"Error occured while retriving user information"})
+    })
 }
 
 //Update a new identified user by user id
